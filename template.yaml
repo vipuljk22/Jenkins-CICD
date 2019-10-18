@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: GIG Economy !! This my first CICD Deployment - Version 1.0(GIT Update).
+
+Globals:
+  Function:
+    MemorySize: 128
+    Runtime: nodejs8.10
+    Timeout: 5
+
+Resources:
+  eventLogging:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: CICDLoggingLambda
+      Handler: eventLogging.handler
+      Timeout: 3
+      Events:
+        GetLogger:
+          Type: Api
+          Properties:
+            Path: /v1/logging
+            Method: get
+
+  concatenateString:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: CICDConcatenateLambda
+      Handler: concatenateString.handler
+      Events:
+        PostConcat:
+          Type: Api
+          Properties:
+            Path: /v1/concatenate
+            Method: post
